@@ -12,6 +12,13 @@ public class Medication
 public class Symptom
 {
     public string Name { get; }
+    public string Description { get; }
+    public Symptom(string name, string desc)
+    {
+        this.Name = name;
+        this.Description = desc;
+    }
+
 }
 //Appointment
 public class Appointment

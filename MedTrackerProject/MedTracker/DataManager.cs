@@ -8,6 +8,7 @@ public class DataManager
     public List<Symptom> Appointments { get; }
     public DataManager()
     {
+        Username = "New User";
         Meds = new();
         Meds.Add(new Medication("Zyrtek"));
         Meds.Add(new Medication("Sugarpills"));
@@ -19,6 +20,10 @@ public class DataManager
     public void AddMedication(string medName)
     {
         Meds.Add(new Medication(medName));
+    }
+    public void AddSymptom(string symName, string desc)
+    {
+        Symptoms.Add(new Symptom(symName, desc));
     }
     public void RenameUser(string userName)
     {
