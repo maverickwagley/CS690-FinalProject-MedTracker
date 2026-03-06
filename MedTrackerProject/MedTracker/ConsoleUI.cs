@@ -69,8 +69,20 @@ public class ConsoleUI
                 symptomMode = AnsiConsole.Prompt( 
                     new SelectionPrompt<string>()
                     .Title("Please select mode")
-                    .AddChoices(new[] {"Log a Symptom","View a Previous Symptom","Back" }));
+                    .AddChoices(new[] {"View a Previous Symptom","Log a Symptom","Back" }));
 
+                if (symptomMode == "View a Previous Symptom")
+                {
+                    Console.WriteLine("View previous entries in your symptom log.");
+                    var table = new Table(); 
+                    table.AddColumn("Entry Names");
+                    table.AddColumn("Description");
+                    foreach(var sym in dataManager.Symptoms) 
+                    { 
+                        table.AddRow(sym.Name, sym.Description);
+                    }
+                    AnsiConsole.Write(table); 
+                }
                 if (symptomMode == "Log a Symptom")
                 {
                     Console.WriteLine("Log a new symptom experience");
@@ -90,11 +102,42 @@ public class ConsoleUI
         }
         else if(mode == "Appointments")
         {
-           Console.WriteLine("View an Upcoming Appointment");
-            var appointmentMode = AnsiConsole.Prompt( 
-                new SelectionPrompt<string>()
-                .Title("Please select mode")
-                .AddChoices(new[] {"Appointment A", "Back" }));
+            string appointmentMode;
+            do
+            {
+                Console.WriteLine("Track Your Appointments");
+                appointmentMode = AnsiConsole.Prompt( 
+                    new SelectionPrompt<string>()
+                    .Title("Please select mode")
+                    .AddChoices(new[] {"View an Upcoming Appointment", "Add an Upcoming Appointment", "Back" }));
+                if (appointmentMode == "View an Upcoming Appointment")
+                {
+                    Console.WriteLine("View Upcoming Appointments.");
+                    var table = new Table(); 
+                    table.AddColumn("Appointment Name");
+                    table.AddColumn("Date");
+                    foreach(var app in dataManager.Appointments) 
+                    { 
+                        table.AddRow(app.Name,app.Date);
+                    }
+                    AnsiConsole.Write(table); 
+                }
+                if (appointmentMode == "Add an Upcoming Appointment")
+                {
+                    Console.WriteLine("Add an Upcoming Appointment");
+                    Console.WriteLine("Give the appointment a name. Type \'back\' to return.");
+                    var newAppName = AnsiConsole.Prompt(new TextPrompt<string>("name the appt.:"));
+                    if (newAppName != "back")
+                    {
+                        Console.WriteLine("Give the date of the appointment. Type \'back\' to return.");
+                        var newAppDesc = AnsiConsole.Prompt(new TextPrompt<string>("date:"));
+                        if (newAppDesc != "back")
+                        {
+                            dataManager.AddAppointment(newAppName,newAppDesc);
+                        }
+                    }
+                }
+            } while(appointmentMode != "Back");
         }
         else if(mode == "User")
         {
