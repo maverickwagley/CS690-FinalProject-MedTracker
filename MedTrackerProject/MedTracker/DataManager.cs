@@ -64,6 +64,32 @@ public class DataManager
         Meds.Add(new Medication(medName));
         medicationFile.AppendLine(medName);
     }
+    public void RemoveMedication(string medName)
+    {
+        Medication _remove = null; 
+        foreach (var med in Meds)
+        {
+            if (med.Name == medName)
+            {
+                _remove = med;
+                break;
+            }
+        }
+        if (_remove != null)
+        {
+            Meds.Remove(_remove);
+            SynchronizeMedication(); 
+        }
+        
+    }
+    public void SynchronizeMedication()
+    {
+        File.Delete("meds-data.txt");
+        foreach (var meds in Meds)
+        {
+            File.AppendAllText("meds-data.txt", meds.Name + Environment.NewLine);
+        }
+    }
     public void AddSymptom(string symName, string desc)
     {
         Symptoms.Add(new Symptom(symName, desc));

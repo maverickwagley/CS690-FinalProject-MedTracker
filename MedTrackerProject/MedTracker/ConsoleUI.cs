@@ -37,7 +37,7 @@ public class ConsoleUI
                 medMode = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                     .Title("Please select mode")
-                    .AddChoices(new[] {"View Daily Meds","Add a Daily Med","Back" }));
+                    .AddChoices(new[] {"View Daily Meds","Add a Daily Med","Remove a Daily Med","Back" }));
                 if (medMode == "View Daily Meds")
                 {
                     var table = new Table(); 
@@ -56,6 +56,21 @@ public class ConsoleUI
                     {
                         dataManager.AddMedication(newMedName);
                     }
+                }
+                else if (medMode == "Remove a Daily Med")
+                {
+                    //Make a list of the names of the meds 
+                    List<string> _medNames = new();
+                    foreach (Medication meds in dataManager.Meds)
+                    {
+                        _medNames.Add(meds.Name);
+                    }
+                    Console.WriteLine("Remove a Daily Medication.");
+                    var removeMed = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                    .Title("Please select mode")
+                    .AddChoices(_medNames));
+                    dataManager.RemoveMedication(removeMed);
                 }
             }
             while (medMode != "Back");
