@@ -65,12 +65,13 @@ public class ConsoleUI
                     {
                         _medNames.Add(meds.Name);
                     }
+                    _medNames.Add("Back");
                     Console.WriteLine("Remove a Daily Medication.");
                     var removeMed = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                     .Title("Please select mode")
                     .AddChoices(_medNames));
-                    dataManager.RemoveMedication(removeMed);
+                    if (removeMed != "Back") { dataManager.RemoveMedication(removeMed);}
                 }
             }
             while (medMode != "Back");
