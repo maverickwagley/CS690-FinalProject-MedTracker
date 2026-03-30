@@ -125,7 +125,7 @@ public class ConsoleUI
                 appointmentMode = AnsiConsole.Prompt( 
                     new SelectionPrompt<string>()
                     .Title("Please select mode")
-                    .AddChoices(new[] {"View an Upcoming Appointment", "Add an Upcoming Appointment", "Back" }));
+                    .AddChoices(new[] {"View an Upcoming Appointment", "Add an Upcoming Appointment","Remove an Appointment", "Back" }));
                 if (appointmentMode == "View an Upcoming Appointment")
                 {
                     Console.WriteLine("View Upcoming Appointments.");
@@ -152,6 +152,22 @@ public class ConsoleUI
                             dataManager.AddAppointment(newAppName,newAppDesc);
                         }
                     }
+                }
+                if (appointmentMode == "Remove an Appointment")
+                {
+                    //
+                    List<string> _appNames = new();
+                    foreach (Appointment apps in dataManager.Appointments)
+                    {
+                        _appNames.Add(apps.Name);
+                    }
+                    _appNames.Add("Back");
+                    Console.WriteLine("Remove an Appointment");
+                    var removeApp = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                    .Title("Please select mode")
+                    .AddChoices(_appNames));
+                    if (removeApp != "Back") { dataManager.RemoveAppointment(removeApp);}
                 }
             } while(appointmentMode != "Back");
         }

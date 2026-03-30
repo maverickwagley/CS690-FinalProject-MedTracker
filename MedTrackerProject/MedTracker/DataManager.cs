@@ -64,6 +64,24 @@ public class DataManager
         Meds.Add(new Medication(medName));
         medicationFile.AppendLine(medName);
     }
+    public void RemoveAppointment(string appName)
+    {
+        Appointment _remove = null; 
+        foreach (var app in Appointments)
+        {
+            if (app.Name == appName)
+            {
+                _remove = app;
+                break;
+            }
+        }
+        if (_remove != null)
+        {
+            Appointments.Remove(_remove);
+            SynchronizeAppointment(); 
+        }
+        
+    }
     public void RemoveMedication(string medName)
     {
         Medication _remove = null; 
@@ -81,6 +99,14 @@ public class DataManager
             SynchronizeMedication(); 
         }
         
+    }
+    public void SynchronizeAppointment()
+    {
+        File.Delete("appointments-data.txt");
+        foreach (var apps in Appointments)
+        {
+            File.AppendAllText("appointments-data.txt", apps.Name + Environment.NewLine);
+        }
     }
     public void SynchronizeMedication()
     {
