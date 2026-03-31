@@ -1,2 +1,4 @@
 <Solution>
+  <Project Path="MedTracker.Test/MedTracker.Test.csproj" />
+  <Project Path="MedTracker/MedTracker.csproj" />
 </Solution>

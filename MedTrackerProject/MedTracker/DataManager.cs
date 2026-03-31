@@ -7,7 +7,7 @@ public class DataManager
     public FileSaver medicationFile { get; set; }
     public FileSaver symptomsFile { get; set; }
     public FileSaver appointmentsFile { get; set; }
-    public string Username { get; set; }
+    public string Username { get; set; } = "New User";
     public List<Medication> Meds { get; }
     public List<Symptom> Symptoms { get; }
     public List<Appointment> Appointments { get; }
