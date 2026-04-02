@@ -9,7 +9,7 @@ public class DataManagerTests
         testDM = new();
     }
     [Fact]
-    public void Test_Init()
+    public void Test_DM_Init()
     {
         var _name = testDM.Username;
         Assert.Equal("New User",_name);

@@ -5,7 +5,7 @@ using Spectre.Console;
 public class ConsoleUI
 {
     
-    DataManager dataManager;
+    public DataManager dataManager;
     public ConsoleUI() 
     { 
         dataManager = new DataManager();
