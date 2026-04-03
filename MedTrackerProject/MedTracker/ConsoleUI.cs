@@ -21,6 +21,14 @@ public class ConsoleUI
         {
         //Select Driver or Manager
         Console.WriteLine("Welcome " + dataManager.Username);
+        if (dataManager.Appointments.Count() >= 1)
+        {
+            Console.WriteLine($"Your next appointment is {dataManager.Appointments[0].Name} on {dataManager.Appointments[0].Date}");
+        }
+        else
+        {
+            Console.WriteLine("You have no upcoming appointments.");
+        }
         mode = AnsiConsole.Prompt( 
             new SelectionPrompt<string>()
             .Title("Please select mode")
@@ -194,5 +202,9 @@ public class ConsoleUI
             }while(userMode != "No, return");
         }
     }while(mode != "Exit");
+
+    //Exit Text
+    Console.WriteLine($"Don't forget your next appointment is {dataManager.Appointments[0].Name} on {dataManager.Appointments[0].Date}");
+    Console.WriteLine("Have a great day!");
     }
 }

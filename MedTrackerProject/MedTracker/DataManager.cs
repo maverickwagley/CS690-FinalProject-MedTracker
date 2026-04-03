@@ -54,7 +54,14 @@ public class DataManager
             foreach (var line in appsDataContent)
             {
                 var splitted = line.Split(":", StringSplitOptions.RemoveEmptyEntries);
-                Appointments.Add(new Appointment(splitted[0], splitted[1]));
+                if (splitted.Count() >= 2)
+                {
+                    Appointments.Add(new Appointment(splitted[0], splitted[1]));
+                }
+                else
+                {
+                    Appointments.Add(new Appointment(splitted[0], "No Date Set"));
+                }
             }
         }
     }
@@ -105,7 +112,7 @@ public class DataManager
         File.Delete("appointments-data.txt");
         foreach (var apps in Appointments)
         {
-            File.AppendAllText("appointments-data.txt", apps.Name + Environment.NewLine);
+            File.AppendAllText("appointments-data.txt", apps.Name + ":" + apps.Date + Environment.NewLine);
         }
     }
     public void SynchronizeMedication()
