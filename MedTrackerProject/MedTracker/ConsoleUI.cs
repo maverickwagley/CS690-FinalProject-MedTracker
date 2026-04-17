@@ -48,25 +48,35 @@ public class ConsoleUI
                     .AddChoices(new[] {"View Daily Meds","Add a Daily Med","Remove a Daily Med","Back" }));
                 if (medMode == "View Daily Meds")
                 {
+                    Console.Clear();
                     var table = new Table(); 
+                    string returnMode = "";
                     table.AddColumn("Medications");
                     foreach(var med in dataManager.Meds) 
                     { 
                         table.AddRow(med.Name);
                     }
-                    AnsiConsole.Write(table); 
+                    do { AnsiConsole.Write(table); 
+                    returnMode = AnsiConsole.Prompt(new SelectionPrompt<string>()
+                        .Title("Press Enter to Return")
+                        .AddChoices(new[] { "Back" }));
+                    }while (returnMode != "Back");
+                    Console.Clear();
                 }
                 else if (medMode == "Add a Daily Med")
                 {
+                    Console.Clear();
                     Console.WriteLine("Add a new Daily Medication. Type \'back\' to return.");
                     var newMedName = AnsiConsole.Prompt(new TextPrompt<string>("Add a Daily Med:"));
                     if (newMedName != "back")
                     {
                         dataManager.AddMedication(newMedName);
                     }
+                    Console.Clear();
                 }
                 else if (medMode == "Remove a Daily Med")
                 {
+                    Console.Clear();
                     //Make a list of the names of the meds 
                     List<string> _medNames = new();
                     foreach (Medication meds in dataManager.Meds)
@@ -80,7 +90,9 @@ public class ConsoleUI
                     .Title("Please select mode")
                     .AddChoices(_medNames));
                     if (removeMed != "Back") { dataManager.RemoveMedication(removeMed);}
+                    Console.Clear();
                 }
+                Console.Clear();
             }
             while (medMode != "Back");
         } 
@@ -89,6 +101,7 @@ public class ConsoleUI
             string symptomMode;
             do
             {
+                
                 Console.WriteLine("Track Your Symptoms");
                 symptomMode = AnsiConsole.Prompt( 
                     new SelectionPrompt<string>()
@@ -97,15 +110,23 @@ public class ConsoleUI
 
                 if (symptomMode == "View a Previous Symptom")
                 {
+                    Console.Clear();
                     Console.WriteLine("View previous entries in your symptom log.");
                     var table = new Table(); 
+                    string returnMode = "";
                     table.AddColumn("Entry Names");
                     table.AddColumn("Description");
                     foreach(var sym in dataManager.Symptoms) 
                     { 
                         table.AddRow(sym.Name, sym.Description);
                     }
-                    AnsiConsole.Write(table); 
+                    do{
+                    AnsiConsole.Write(table);
+                    returnMode = AnsiConsole.Prompt(new SelectionPrompt<string>()
+                        .Title("Press Enter to Return")
+                        .AddChoices(new[] { "Back" }));
+                    }while (returnMode != "Back");
+                    Console.Clear();
                 }
                 if (symptomMode == "Log a Symptom")
                 {
@@ -114,14 +135,17 @@ public class ConsoleUI
                     var newSymName = AnsiConsole.Prompt(new TextPrompt<string>("name the entry:"));
                     if (newSymName != "back")
                     {
+                        Console.Clear();
                         Console.WriteLine("Describe the experience. Type \'back\' to return.");
                         var newSymDesc = AnsiConsole.Prompt(new TextPrompt<string>("describe the experience:"));
                         if (newSymDesc != "back")
                         {
                             dataManager.AddSymptom(newSymName,newSymDesc);
                         }
+                        Console.Clear();
                     }
                 }
+                Console.Clear();
             } while(symptomMode != "Back");
         }
         else if(mode == "Appointments")
@@ -136,23 +160,32 @@ public class ConsoleUI
                     .AddChoices(new[] {"View an Upcoming Appointment", "Add an Upcoming Appointment","Remove an Appointment", "Back" }));
                 if (appointmentMode == "View an Upcoming Appointment")
                 {
+                    Console.Clear();
                     Console.WriteLine("View Upcoming Appointments.");
                     var table = new Table(); 
+                    string returnMode = "";
                     table.AddColumn("Appointment Name");
                     table.AddColumn("Date");
                     foreach(var app in dataManager.Appointments) 
                     { 
                         table.AddRow(app.Name,app.Date);
                     }
-                    AnsiConsole.Write(table); 
+                    do { AnsiConsole.Write(table); 
+                    returnMode = AnsiConsole.Prompt(new SelectionPrompt<string>()
+                        .Title("Press Enter to Return")
+                        .AddChoices(new[] { "Back" }));
+                    }while (returnMode != "Back");
+                    Console.Clear();
                 }
                 if (appointmentMode == "Add an Upcoming Appointment")
                 {
+                    Console.Clear();
                     Console.WriteLine("Add an Upcoming Appointment");
                     Console.WriteLine("Give the appointment a name. Type \'back\' to return.");
                     var newAppName = AnsiConsole.Prompt(new TextPrompt<string>("name the appt.:"));
                     if (newAppName != "back")
                     {
+
                         Console.WriteLine("Give the date of the appointment. Type \'back\' to return.");
                         var newAppDesc = AnsiConsole.Prompt(new TextPrompt<string>("date:"));
                         if (newAppDesc != "back")
@@ -160,10 +193,11 @@ public class ConsoleUI
                             dataManager.AddAppointment(newAppName,newAppDesc);
                         }
                     }
+                    Console.Clear();
                 }
                 if (appointmentMode == "Remove an Appointment")
                 {
-                    //
+                    Console.Clear();
                     List<string> _appNames = new();
                     foreach (Appointment apps in dataManager.Appointments)
                     {
@@ -176,7 +210,9 @@ public class ConsoleUI
                     .Title("Please select mode")
                     .AddChoices(_appNames));
                     if (removeApp != "Back") { dataManager.RemoveAppointment(removeApp);}
+                    Console.Clear();
                 }
+                Console.Clear();
             } while(appointmentMode != "Back");
         }
         else if(mode == "User")
@@ -198,6 +234,7 @@ public class ConsoleUI
                     {
                         dataManager.RenameUser(newUserName);
                     }
+                    Console.Clear();
                 }
             }while(userMode != "No, return");
         }
